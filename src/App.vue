@@ -7,35 +7,40 @@ import { ref, onMounted } from 'vue'
 const staffTag = [
   {
     id: 1,
-    bgColor: 'rgba(176, 188, 199, 1)',
-    textColor: 'rgba(255, 255, 255, 1)',
+    bgColor: '#B0BCC7',
+    rgbBg: 'rgb(176, 188, 199)',
+    textColor: '#B0BCC7',
     title: 'Весь список'
   },
   {
     id: 2,
-    bgColor: 'rgba(255, 253, 241, 1)',
-    textColor: 'rgba(226, 189, 6, 1)',
+    bgColor: '#FFFDF1',
+    rgbBg: 'rgb(255, 253, 241)',
+    textColor: '#E2BD06',
     title: 'Проблемные',
     description: 'Истекает патент'
   },
   {
     id: 3,
-    bgColor: 'rgba(255, 248, 248, 1)',
-    textColor: 'rgba(229, 46, 46, 1)',
+    bgColor: '#FFF8F8',
+    rgbBg: 'rgb(255, 248, 248)',
+    textColor: '#E52E2E',
     title: 'Критические',
     description: 'Истекают все документы'
   },
   {
     id: 4,
-    bgColor: 'rgba(243, 252, 255, 1)',
-    textColor: 'rgba(0, 182, 237, 1)',
+    bgColor: '#F3FCFF',
+    rgbBg: 'rgb(243, 252, 255)',
+    textColor: '#00B6ED',
     title: 'Есть замечания',
     description: 'Пропустил медосмотр'
   },
   {
     id: 5,
-    bgColor: 'rgba(242, 255, 249, 1)',
-    textColor: 'rgba(0, 174, 91, 1)',
+    bgColor: '#F2FFF9',
+    rgbBg: 'rgb(242, 255, 249)',
+    textColor: '#00AE5B',
     title: 'Выполнено',
     description: 'Прошел все процедуры'
   }
@@ -128,14 +133,13 @@ const employeeList = ref([
     position: 'промышленный альпинист',
     position_id: position[0].id,
     status: staffTag[2].description,
-    tag_id: staffTag[2].id,
+    tag_id: staffTag[2].id + '',
     tag: 'Критические'
   }
 ])
 
 const editEmployeeList = (value) => {
   employeeList.value.unshift(value)
-  console.log(value)
 }
 const modalCreateEmployee = ref(false)
 
@@ -143,10 +147,18 @@ const openCloseModal = () => {
   modalCreateEmployee.value = !modalCreateEmployee.value
 }
 
-const filterCategoryList = ref(1)
+const filterCategoryList = ref([])
 
 const editFilterCategoryList = (value) => {
-  filterCategoryList.value = value
+  if (value == 1) {
+    filterCategoryList.value.length = 0
+  } else {
+    if (filterCategoryList.value.includes(value)) {
+      filterCategoryList.value.splice(filterCategoryList.value.indexOf(value), 1)
+    } else {
+      filterCategoryList.value.push(value)
+    }
+  }
 }
 </script>
 

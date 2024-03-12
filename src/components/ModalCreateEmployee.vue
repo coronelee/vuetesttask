@@ -79,7 +79,6 @@ const createEmployee = () => {
             :key="staff"
             :value="staff.id"
             :style="{ 'background-color': staff.bgColor, color: staff.textColor }"
-            :v-if="staff.id !== 1"
           >
             {{ staff.title }}
           </option>

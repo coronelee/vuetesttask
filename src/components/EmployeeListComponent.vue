@@ -10,13 +10,12 @@ const props = defineProps({
   type_contract: Array,
   gender: Array
 })
-onMounted(() => {
-  for (let i = 0; i < props.staffTag.length; i++) {
-    document.getElementById(i + 1).style.border = `1px solid ${props.staffTag[i].textColor}`
-    document.getElementById(i + 1).style.backgroundColor = props.staffTag[i].bgColor
-    document.getElementById(i + 1).style.color = props.staffTag[i].textColor
-  }
-})
+
+const selectFilterItems = (e) => {
+  e.target.classList.toggle(`bg-[${props.staffTag[e.target.id - 1].textColor}]`)
+  e.target.classList.toggle(`text-[#ffffff]`)
+  console.log(e.target.classList + '   ' + props.staffTag[e.target.id - 1].textColor)
+}
 </script>
 
 <template>
@@ -31,13 +30,13 @@ onMounted(() => {
     </div>
     <div class="p-10 flex flex-col gap-6">
       <span class="text-[#041423] text-2xl font-semibold">Список сотрудников</span>
-      <div class="flex gap-4">
+      <div class="flex gap-4 flew-wrap">
         <span
           v-for="category in staffTag"
           :key="category.id"
           class="px-4 py-2 rounded-full font-semibold cursor-pointer"
           :id="category.id"
-          @click="editFilterCategoryList($event.target.id)"
+          @click="editFilterCategoryList($event.target.id), selectFilterItems($event)"
         >
           {{ category.title }}
         </span>
@@ -45,8 +44,9 @@ onMounted(() => {
       <div class="flex flex-col gap-4">
         <div v-for="employee in employeeList" :key="employee.id" class="w-full">
           <div
-            v-if="filterCategoryList == 1 || employee.tag_id == filterCategoryList"
+            v-if="filterCategoryList.length == 0 || filterCategoryList.includes(employee.tag_id)"
             class="w-full flex flex-col gap-2 items-start rounded bg-[#E7F3FF] w-full p-8"
+            @click="() => console.log(employee.tag_id)"
           >
             <div class="flex flex-wrap gap-4 items-center">
               <span class="text-[#2A358C] font-semibold text-lg">{{ employee.full_name }}</span>
@@ -81,3 +81,9 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.active {
+  background-color: #2a358c;
+}
+</style>
