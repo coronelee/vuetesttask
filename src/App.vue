@@ -14,7 +14,7 @@ const staffTag = [
   },
   {
     id: 2,
-    bgColor: '#FFFDF1',
+    bgColor: '#fffdf1',
     rgbBg: 'rgb(255, 253, 241)',
     textColor: '#E2BD06',
     title: 'Проблемные',
@@ -22,7 +22,7 @@ const staffTag = [
   },
   {
     id: 3,
-    bgColor: '#FFF8F8',
+    bgColor: '#fff8f8',
     rgbBg: 'rgb(255, 248, 248)',
     textColor: '#E52E2E',
     title: 'Критические',
