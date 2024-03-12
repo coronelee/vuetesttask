@@ -9,12 +9,12 @@ const staffTag = [
     id: 1,
     bgColor: '#B0BCC7',
     rgbBg: 'rgb(176, 188, 199)',
-    textColor: '#B0BCC7',
+    textColor: '#FFFFFF',
     title: 'Весь список'
   },
   {
     id: 2,
-    bgColor: '#fffdf1',
+    bgColor: '#FFFDF1',
     rgbBg: 'rgb(255, 253, 241)',
     textColor: '#E2BD06',
     title: 'Проблемные',
@@ -22,7 +22,7 @@ const staffTag = [
   },
   {
     id: 3,
-    bgColor: '#fff8f8',
+    bgColor: '#FFF8F8',
     rgbBg: 'rgb(255, 248, 248)',
     textColor: '#E52E2E',
     title: 'Критические',
@@ -124,13 +124,13 @@ const employeeList = ref([
     address: 'г. Санкт-Петербург',
     date_birth: '23.06.2001',
     age: 21,
-    type_contract: 'СМЗ',
+    type_contract: type_contract[2].title,
     type_contract_id: type_contract[2].id,
-    gender: 'Мужской',
+    gender: gender[0].title,
     gender_id: gender[0].id,
-    country: 'Россия',
+    country: country[0].title,
     country_id: country[0].id,
-    position: 'промышленный альпинист',
+    position: position[0].title,
     position_id: position[0].id,
     status: staffTag[2].description,
     tag_id: staffTag[2].id + '',
@@ -138,6 +138,20 @@ const employeeList = ref([
   }
 ])
 
+const filterComponent = ref([
+  {
+    country_id: '',
+    gender: '',
+    position: '',
+    type_contractTD: false,
+    type_contractGPH: false,
+    type_contractSMZ: false,
+    type_contractKD: false
+  }
+])
+const editFilterComponent = (value) => {
+  filterComponent.value = value
+}
 const editEmployeeList = (value) => {
   employeeList.value.unshift(value)
 }
@@ -146,12 +160,21 @@ const modalCreateEmployee = ref(false)
 const openCloseModal = () => {
   modalCreateEmployee.value = !modalCreateEmployee.value
 }
+const filteredSearch = ref('')
+const editFilteredSearch = (value) => {
+  filteredSearch.value = value
+}
 
 const filterCategoryList = ref([])
 
 const editFilterCategoryList = (value) => {
   if (value == 1) {
     filterCategoryList.value.length = 0
+    for (let i = 1; i <= staffTag.length; i++) {
+      console.log(i + '  ' + staffTag[i - 1].bgColor)
+      document.getElementById(i).style.backgroundColor = staffTag[i - 1].bgColor
+      document.getElementById(i).style.color = staffTag[i - 1].textColor
+    }
   } else {
     if (filterCategoryList.value.includes(value)) {
       filterCategoryList.value.splice(filterCategoryList.value.indexOf(value), 1)
@@ -173,6 +196,9 @@ const editFilterCategoryList = (value) => {
       :gender="gender"
       :editFilterCategoryList="editFilterCategoryList"
       :filterCategoryList="filterCategoryList"
+      :editFilteredSearch="editFilteredSearch"
+      :filteredSearch="filteredSearch"
+      :filterComponent="filterComponent"
     />
     <CreateAndFilterEmployeeSheetComponent
       :openCloseModal="openCloseModal"
@@ -181,6 +207,7 @@ const editFilterCategoryList = (value) => {
       :position="position"
       :type_contract="type_contract"
       :editFilterCategoryList="editFilterCategoryList"
+      :editFilterComponent="editFilterComponent"
     />
     <ModalCreateEmployee
       v-if="modalCreateEmployee"

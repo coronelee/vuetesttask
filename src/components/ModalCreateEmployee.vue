@@ -10,6 +10,13 @@ const props = defineProps({
 })
 
 const createEmployee = () => {
+  let gender = 0
+  if (document.getElementById('gender_M').checked) {
+    gender = 1
+  } else {
+    gender = 2
+  }
+
   props.editEmployeeList({
     full_name: document.getElementById('fio').value,
     inn: document.getElementById('inn').value,
@@ -18,8 +25,8 @@ const createEmployee = () => {
     age: document.getElementById('age').value,
     type_contract: document.getElementById('type_contract').value,
     type_contract_id: document.getElementById('type_contract').value,
-    gender: document.getElementById('gender_type').value,
-    gender_id: document.getElementById('gender_type').value,
+    gender: gender,
+    gender_id: gender,
     country: document.getElementById('country_type').value,
     country_id: document.getElementById('country_type').value,
     position: document.getElementById('position_type').value,
@@ -61,9 +68,11 @@ const createEmployee = () => {
         <span>Дата рождения <input type="date" id="date_birth" /></span>
         <input type="text" placeholder="Возраст" id="age" />
         <div class="flex gap-4">
-          <span v-for="gender in gender" :key="gender">
-            <input type="radio" name="example" :value="gender.id" id="gender_type" />
-            {{ gender.title }}
+          <span>
+            <input type="radio" name="example" value="1" id="gender_M" />
+            Мужской
+            <input type="radio" name="example" value="2" id="gender_F" />
+            Женский
           </span>
         </div>
         <select name="position" id="position_type" class="px-4 py-2">
@@ -83,7 +92,10 @@ const createEmployee = () => {
             {{ staff.title }}
           </option>
         </select>
-        <button @click="() => createEmployee()" class="w-full bg-[#2A358C] text-white py-4">
+        <button
+          @click="() => createEmployee()"
+          class="w-full bg-[#13273d] text-white py-4 hover:bg-[#2A358C] transition-all duration-500"
+        >
           Создать
         </button>
       </div>
