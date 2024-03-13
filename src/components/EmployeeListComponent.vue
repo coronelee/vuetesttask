@@ -13,13 +13,8 @@ const props = defineProps({
   filteredSearch: String,
   filterComponent: Array
 })
-let filter = 0
-watch(
-  () => props.filteredSearch,
-  (newValue) => {
-    filter = newValue.split('')
-  }
-)
+const maxLength = ref(4)
+const currentLength = ref(0)
 const selectFilterItems = (e) => {
   if (e.target.id != 1) {
     if (e.target.style.backgroundColor === props.staffTag[e.target.id - 1].rgbBg) {
@@ -31,35 +26,14 @@ const selectFilterItems = (e) => {
     }
   }
 }
-// const filterr = ref([])
 
-// watch(
-//   () => props.filterComponent,
-//   (newValue) => {
-//     editFilter()
-//   }
-// )
-
-// const editFilter = () => {}
 const filterSearch = ref('')
 const filterEmployee = (value) => {
   filterSearch.value = value
 }
+//:on-show="currentLength++"
 </script>
-<!-- v-if="
-              employee.full_name.split(' ')[0].toLowerCase().includes(filterSearch.toLowerCase()) &&
-              (filterCategoryList.includes(employee.tag_id) || filterCategoryList.length == 0) &&
-              (filterComponent.country_id == '' ||
-                filterComponent.country_id == employee.country_id) &&
-              (filterComponent.gender == '' || filterComponent.gender == employee.gender_id) &&
-              (filterComponent.position == '' ||
-                filterComponent.position == employee.position_id) &&
-              (!filterComponent.type_contractTD || employee.type_contract_id == 1 ) &&
-              (!filterComponent.type_contractGPH || employee.type_contract_id == 2) &&
-              (!filterComponent.type_contractSMZ || employee.type_contract_id == 3) &&
-              (!filterComponent.type_contractKD || employee.type_contract_id == 4)
-            "
-            " -->
+
 <template>
   <div class="bg-white w-2/3">
     <div class="w-full p-10 border-b border-[#DBE4ED] flex flex-col gap-2">
@@ -100,13 +74,13 @@ const filterEmployee = (value) => {
                 !filterComponent.type_contractGPH &&
                 !filterComponent.type_contractSMZ &&
                 !filterComponent.type_contractKD) ||
-                (filterComponent.type_contractTD && employee.type_contract_id === 1) ||
-                (filterComponent.type_contractGPH && employee.type_contract_id === 2) ||
-                (filterComponent.type_contractSMZ && employee.type_contract_id === 3) ||
-                (filterComponent.type_contractKD && employee.type_contract_id === 4))
+                (filterComponent.type_contractTD && employee.type_contract_id == 1) ||
+                (filterComponent.type_contractGPH && employee.type_contract_id == 2) ||
+                (filterComponent.type_contractSMZ && employee.type_contract_id == 3) ||
+                (filterComponent.type_contractKD && employee.type_contract_id == 4))
             "
             class="w-full flex flex-col gap-2 items-start rounded bg-[#E7F3FF] w-full p-8"
-            @click="() => console.log(employee.tag_id)"
+            @click="console.log(key, value)"
           >
             <div class="flex flex-wrap gap-4 items-center">
               <span class="text-[#2A358C] font-semibold text-lg">{{ employee.full_name }}</span>

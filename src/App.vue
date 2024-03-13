@@ -151,8 +151,6 @@ const filterComponent = ref([
 ])
 const editFilterComponent = (value) => {
   filterComponent.value = value
-  console.log(filterComponent.value)
-  //
 }
 const editEmployeeList = (value) => {
   employeeList.value.unshift(value)
@@ -173,7 +171,6 @@ const editFilterCategoryList = (value) => {
   if (value == 1) {
     filterCategoryList.value.length = 0
     for (let i = 1; i <= staffTag.length; i++) {
-      console.log(i + '  ' + staffTag[i - 1].bgColor)
       document.getElementById(i).style.backgroundColor = staffTag[i - 1].bgColor
       document.getElementById(i).style.color = staffTag[i - 1].textColor
     }
