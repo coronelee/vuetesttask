@@ -2,6 +2,7 @@
 import EmployeeListComponent from './components/EmployeeListComponent.vue'
 import CreateAndFilterEmployeeSheetComponent from './components/CreateAndFilterEmployeeSheetComponent.vue'
 import ModalCreateEmployee from './components/ModalCreateEmployee.vue'
+import EditEmployeeComponent from './components/EditEmployeeComponent.vue'
 import { ref, onMounted } from 'vue'
 
 const staffTag = [
@@ -138,6 +139,13 @@ const employeeList = ref([
   }
 ])
 
+const editModal = ref(false)
+const valueEdit = ref([])
+const openCloseEditModal = (value) => {
+  valueEdit.value = value
+  editModal.value = !editModal.value
+}
+
 const filterComponent = ref([
   {
     country_id: '',
@@ -149,6 +157,31 @@ const filterComponent = ref([
     type_contractKD: false
   }
 ])
+const editEmployeeItem = (value, employee) => {
+  // console.log(value + '   ' + employee)
+  for (let i = 0; i < employeeList.value.length; i++) {
+    if (employeeList.value[i].full_name == value) {
+      employeeList.value[i].full_name = employee[0]
+      employeeList.value[i].inn = employee[1]
+      employeeList.value[i].address = employee[2]
+      employeeList.value[i].date_birth = employee[3]
+      employeeList.value[i].age = employee[4]
+      employeeList.value[i].type_contract = employee[5]
+      employeeList.value[i].type_contract_id = employee[6]
+      employeeList.value[i].gender = employee[7]
+      employeeList.value[i].gender_id = employee[8]
+      employeeList.value[i].country = employee[9]
+      employeeList.value[i].country_id = employee[10]
+      employeeList.value[i].position = employee[11]
+      employeeList.value[i].position_id = employee[12]
+      employeeList.value[i].status = employee[13]
+      employeeList.value[i].tag_id = employee[14]
+      employeeList.value[i].tag = employee[15]
+    }
+  }
+  console.log(employeeList.value)
+}
+
 const editFilterComponent = (value) => {
   filterComponent.value = value
 }
@@ -198,6 +231,7 @@ const editFilterCategoryList = (value) => {
       :editFilteredSearch="editFilteredSearch"
       :filteredSearch="filteredSearch"
       :filterComponent="filterComponent"
+      :openCloseEditModal="openCloseEditModal"
     />
     <CreateAndFilterEmployeeSheetComponent
       :openCloseModal="openCloseModal"
@@ -217,6 +251,17 @@ const editFilterCategoryList = (value) => {
       :country="country"
       :type_contract="type_contract"
       :gender="gender"
+    />
+    <EditEmployeeComponent
+      v-if="editModal"
+      :valueEdit="valueEdit"
+      :openCloseEditModal="openCloseEditModal"
+      :staffTag="staffTag"
+      :position="position"
+      :country="country"
+      :type_contract="type_contract"
+      :gender="gender"
+      :editEmployeeItem="editEmployeeItem"
     />
   </div>
 </template>

@@ -11,10 +11,10 @@ const props = defineProps({
   gender: Array,
   editFilteredSearch: Function,
   filteredSearch: String,
-  filterComponent: Array
+  filterComponent: Array,
+  openCloseEditModal: Function
 })
 const maxLength = ref(4)
-const currentLength = ref(0)
 const selectFilterItems = (e) => {
   if (e.target.id != 1) {
     if (e.target.style.backgroundColor === props.staffTag[e.target.id - 1].rgbBg) {
@@ -31,7 +31,6 @@ const filterSearch = ref('')
 const filterEmployee = (value) => {
   filterSearch.value = value
 }
-//:on-show="currentLength++"
 </script>
 
 <template>
@@ -45,7 +44,7 @@ const filterEmployee = (value) => {
       />
       <span class="text-[#B0BCC7]">Например: Иванов Иван</span>
     </div>
-    <div class="p-10 flex flex-col gap-6">
+    <div class="p-10 flex flex-col gap-6 items-start">
       <span class="text-[#041423] text-2xl font-semibold">Список сотрудников</span>
       <div class="flex gap-4 flew-wrap">
         <span
@@ -59,8 +58,8 @@ const filterEmployee = (value) => {
           {{ category.title }}
         </span>
       </div>
-      <div class="flex flex-col gap-4">
-        <div v-for="employee in employeeList" :key="employee.id" class="w-full">
+      <div class="flex flex-col gap-4 w-full">
+        <div v-for="employee in employeeList.slice(0, maxLength)" :key="employee.id" class="w-full">
           <div
             v-if="
               employee.full_name.split(' ')[0].toLowerCase().includes(filterSearch.toLowerCase()) &&
@@ -80,7 +79,6 @@ const filterEmployee = (value) => {
                 (filterComponent.type_contractKD && employee.type_contract_id == 4))
             "
             class="w-full flex flex-col gap-2 items-start rounded bg-[#E7F3FF] w-full p-8"
-            @click="console.log(key, value)"
           >
             <div class="flex flex-wrap gap-4 items-center">
               <span class="text-[#2A358C] font-semibold text-lg">{{ employee.full_name }}</span>
@@ -104,14 +102,28 @@ const filterEmployee = (value) => {
               <span>Возраст: {{ employee.age }} год</span>
               <span>Пол: {{ gender[employee.gender_id - 1].title }}</span>
             </div>
-            <span
-              class="text-white px-2 py-1 rounded w-auto mt-4"
-              :style="{ 'background-color': staffTag[employee.tag_id - 1].textColor }"
-              >{{ staffTag[employee.tag_id - 1].title }}</span
-            >
+            <div class="flex flex-wrap items-center justify-center gap-4 mt-4">
+              <span
+                class="text-white px-2 py-1 rounded w-auto"
+                :style="{ 'background-color': staffTag[employee.tag_id - 1].textColor }"
+                >{{ staffTag[employee.tag_id - 1].title }}
+              </span>
+              <button
+                class="bg-[#f7f8f9] p-1 rounded drop-shadow-lg hover:drop-shadow-none transition-all duration-600"
+                @click="openCloseEditModal(employee)"
+              >
+                <img src="/edit.svg" alt="edit" class="w-6" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      <button
+        class="flex justify-center items-center gap-2 px-4 py-2 text-[#2A358C] border border-[#2A358C] rounded m-auto"
+        @click="maxLength += 4"
+      >
+        <img src="/refresh.svg" alt="refresh" class="w-[18px]" /><span>Показать еще</span>
+      </button>
     </div>
   </div>
 </template>
