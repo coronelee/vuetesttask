@@ -158,7 +158,6 @@ const filterComponent = ref([
   }
 ])
 const editEmployeeItem = (value, employee) => {
-  // console.log(value + '   ' + employee)
   for (let i = 0; i < employeeList.value.length; i++) {
     if (employeeList.value[i].full_name == value) {
       employeeList.value[i].full_name = employee[0]
@@ -179,7 +178,6 @@ const editEmployeeItem = (value, employee) => {
       employeeList.value[i].tag = employee[15]
     }
   }
-  console.log(employeeList.value)
 }
 
 const editFilterComponent = (value) => {
@@ -218,7 +216,7 @@ const editFilterCategoryList = (value) => {
 </script>
 
 <template>
-  <div class="bg-[#f7f8f9] w-screen p-12 flex justify-between items-start gap-12 font-Montserrat">
+  <div class="w-screen p-12 flex justify-between items-start gap-12 font-Montserrat">
     <EmployeeListComponent
       :employeeList="employeeList"
       :staffTag="staffTag"
