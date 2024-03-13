@@ -11,11 +11,25 @@ const props = defineProps({
   gender: Array
 })
 let err = false
-
+let currentDate
 onMounted(() => {
+  let todayDate = new Date()
+  currentDate =
+    String(todayDate.getFullYear()) +
+    '-' +
+    String(todayDate.getMonth() + 1).padStart(2, '0') +
+    '-' +
+    String(todayDate.getDate()).padStart(2, '0')
+  document.getElementById('date_birth').max = currentDate
+  console.log(currentDate)
   const age = document.getElementById('age')
+  const inn = document.getElementById('inn')
   age.addEventListener('input', (e) => {
     e.target.value = e.target.value < 0 ? 0 : e.target.value > 122 ? 122 : e.target.value
+  })
+  inn.addEventListener('input', (e) => {
+    e.target.value =
+      e.target.value < 0 ? 0 : e.target.value > 999999999999 ? 999999999999 : e.target.value
   })
 })
 const createEmployee = () => {
@@ -88,7 +102,7 @@ const createEmployee = () => {
         class="flex flex-col gap-4 [&>input]:w-full [&>select]:w-full [&>input]:px-4 [&>select]:px-4 [&>input]:py-2 [&>select]:py-2"
       >
         <input type="text" placeholder="ФИО" id="fio" />
-        <input type="text" placeholder="ИНН" id="inn" />
+        <input type="number" placeholder="ИНН" id="inn" />
         <input type="text" placeholder="Адрес" id="address" />
         <select name="country" id="country_type">
           <option value="" selected disabled hidden>Страна</option>
@@ -104,7 +118,9 @@ const createEmployee = () => {
             {{ type.slug }}
           </option>
         </select>
-        <span>Дата рождения <input type="date" id="date_birth" /></span>
+        <span
+          >Дата рождения <input type="date" id="date_birth" :max="currentDate" min="1900-01-01"
+        /></span>
         <input type="number" placeholder="Возраст" id="age" class="appearance-none" />
         <div class="flex gap-4">
           <span>

@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 const props = defineProps({
   openCloseEditModal: Function,
@@ -11,14 +11,39 @@ const props = defineProps({
   gender: Array,
   editEmployeeItem: Function
 })
+let dateSplit = ref([])
+let dateResult = ref([])
+let date = ref()
+let currentDate
 let err = false
 onMounted(() => {
+  let todayDate = new Date()
+  currentDate =
+    String(todayDate.getFullYear()) +
+    '-' +
+    String(todayDate.getMonth() + 1).padStart(2, '0') +
+    '-' +
+    String(todayDate.getDate()).padStart(2, '0')
+
   if (props.valueEdit.gender_id == 1) {
     document.getElementById('gender_M').checked = true
   } else {
     document.getElementById('gender_F').checked = true
   }
+
+  date.value = props.valueEdit.date_birth
+
+  dateSplit.value = date.value.split('.')
+
+  dateResult.value = dateSplit.value[2] + '-' + dateSplit.value[1] + '-' + dateSplit.value[0]
+
+  if (dateResult.value[0] == 'u') {
+    dateSplit.value = date.value.split('-')
+    dateResult.value = dateSplit.value[0] + '-' + dateSplit.value[1] + '-' + dateSplit.value[2]
+  }
+  console.log(dateResult.value)
 })
+
 const editEmployee = () => {
   let gender = 0
 
@@ -40,6 +65,9 @@ const editEmployee = () => {
     'staff'
   ]
 
+  for (let i = 0; i < idFields.length; i++) {
+    console.log(document.getElementById(idFields[i]).value)
+  }
   for (let i = 0; i < idFields.length; i++) {
     if (String(document.getElementById(idFields[i]).value) == '') {
       document.getElementById(idFields[i]).classList.add('bg-red-200/25')
@@ -80,7 +108,7 @@ const editEmployee = () => {
   <div
     class="w-screen h-screen absolute top-0 left-0 backdrop-blur-sm flex justify-center items-center"
   >
-    <div class="w-1/3 bg-white p-4 border-2 border-[#DBE4ED]">
+    <div class="w-2/5 bg-white p-4 border-2 border-[#DBE4ED]">
       <span class="flex justify-between">
         <span>Изменение данных сотрудника</span>
         <img src="/exit.svg" alt="exit" class="w-8 cursor-pointer" @click="openCloseEditModal()" />
@@ -110,7 +138,13 @@ const editEmployee = () => {
           </option>
         </select>
         <span
-          >Дата рождения <input type="date" id="date_birth" :value="valueEdit.date_birth"
+          >Дата рождения
+          <input
+            type="date"
+            id="date_birth"
+            :value="dateResult"
+            min="1900-01-01"
+            :max="currentDate"
         /></span>
         <input
           type="number"
@@ -149,7 +183,7 @@ const editEmployee = () => {
           </option>
         </select>
         <button
-          @click="editEmployee(), openCloseEditModal()"
+          @click="editEmployee()"
           class="w-full bg-[#13273d] text-white py-4 hover:bg-[#2A358C] transition-all duration-500"
         >
           Изменить
