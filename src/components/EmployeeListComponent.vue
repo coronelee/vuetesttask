@@ -78,13 +78,14 @@ const filterEmployee = (value) => {
             v-if="
               employee.full_name.split(' ')[0].toLowerCase().includes(filterSearch.toLowerCase()) &&
               (filterCategoryList.includes(employee.tag_id) || filterCategoryList.length == 0) &&
-              ((filterComponent.country_id == '' &&
-                filterComponent.gender == '' &&
-                filterComponent.position == '' &&
-                !filterComponent.type_contractTD &&
-                !filterComponent.type_contractGPH &&
-                !filterComponent.type_contractSMZ &&
-                !filterComponent.type_contractKD) ||
+              (filterComponent.country_id == employee.country_id ||
+                (filterComponent.country_id == '' &&
+                  filterComponent.gender == '' &&
+                  filterComponent.position == '' &&
+                  !filterComponent.type_contractTD &&
+                  !filterComponent.type_contractGPH &&
+                  !filterComponent.type_contractSMZ &&
+                  !filterComponent.type_contractKD) ||
                 ((filterComponent.country_id == '' ||
                   filterComponent.country_id == employee.country_id) &&
                   (filterComponent.gender == '' || filterComponent.gender == employee.gender_id) &&

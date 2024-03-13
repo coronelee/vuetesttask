@@ -1,5 +1,4 @@
 <script setup>
-import { c } from 'vite/dist/node/types.d-FdqQ54oU'
 import { onMounted } from 'vue'
 
 const props = defineProps({

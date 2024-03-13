@@ -151,6 +151,16 @@ const filterComponent = ref([
 ])
 const editFilterComponent = (value) => {
   filterComponent.value = value
+  console.log(
+    filterComponent.value.type_contractTD +
+      '   ' +
+      filterComponent.value.type_contractGPH +
+      '   ' +
+      filterComponent.value.type_contractSMZ +
+      '   ' +
+      filterComponent.value.type_contractKD
+  )
+  //
 }
 const editEmployeeList = (value) => {
   employeeList.value.unshift(value)
