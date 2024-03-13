@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref } from 'vue'
 const props = defineProps({
   editFilterCategoryList: Function,
   filterCategoryList: String,
@@ -119,6 +119,7 @@ const filterEmployee = (value) => {
         </div>
       </div>
       <button
+        v-if="employeeList.length >= maxLength"
         class="flex justify-center items-center gap-2 px-4 py-2 text-[#2A358C] border border-[#2A358C] rounded m-auto"
         @click="maxLength += 4"
       >
