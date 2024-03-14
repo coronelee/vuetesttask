@@ -81,7 +81,9 @@ const filterEmployee = (value) => {
             class="w-full flex flex-col gap-2 items-start rounded bg-[#E7F3FF] w-full p-8"
           >
             <div class="flex flex-wrap gap-4 items-center">
-              <span class="text-[#2A358C] font-semibold text-lg">{{ employee.full_name }}</span>
+              <span class="text-[#2A358C] font-semibold text-lg capitalize">{{
+                employee.full_name
+              }}</span>
               <span class="bg-white p-1 text-[#84909B]">ИНН: {{ employee.inn }}</span>
               <span class="bg-[#00AE5B] text-white font-bold p-1 rounded">{{
                 type_contract[employee.type_contract_id - 1].slug

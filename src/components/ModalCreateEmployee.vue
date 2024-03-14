@@ -73,7 +73,7 @@ const createEmployee = () => {
       err = true
     }
   }
-  if (!err && gender != 0) {
+  if (!err && gender != 0 && document.getElementById('fio').validity.valid) {
     let date = document.getElementById('date_birth').value
     let dateSplit = date.split('-')
     let dateResult = dateSplit[2] + '.' + dateSplit[1] + '.' + dateSplit[0]
@@ -109,9 +109,9 @@ const createEmployee = () => {
         <img src="/exit.svg" alt="exit" class="w-8 cursor-pointer" @click="openCloseModal()" />
       </span>
       <div
-        class="flex flex-col gap-4 [&>input]:w-full [&>select]:w-full [&>input]:px-4 [&>select]:px-4 [&>input]:py-2 [&>select]:py-2"
+        class="flex flex-col gap-4 [&>input]:w-full [&>select]:w-full [&>input]:px-4 [&>select]:px-4 [&>input]:py-2 [&>select]:py-2 [&>input:invalid]:bg-red-200/25"
       >
-        <input type="text" placeholder="ФИО" id="fio" />
+        <input type="text" placeholder="ФИО" id="fio" pattern="^[А-Яа-яЁё\s]+$" />
         <input type="number" placeholder="ИНН" id="inn" />
         <input type="text" placeholder="Адрес" id="address" />
         <select name="country" id="country_type">
