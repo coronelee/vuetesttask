@@ -82,11 +82,14 @@ const editEmployee = () => {
     }
   }
   if (!err) {
+    let date = document.getElementById('date_birth').value
+    let dateSplit = date.split('-')
+    let dateResult = dateSplit[2] + '.' + dateSplit[1] + '.' + dateSplit[0]
     props.editEmployeeItem(props.valueEdit.full_name, [
       document.getElementById('fio').value,
       document.getElementById('inn').value,
       document.getElementById('address').value,
-      document.getElementById('date_birth').value,
+      dateResult,
       document.getElementById('age').value,
       document.getElementById('type_contract').value,
       document.getElementById('type_contract').value,
@@ -174,7 +177,7 @@ const editEmployee = () => {
             {{ staffTag[valueEdit.tag_id - 1].title }}
           </option>
           <option
-            v-for="staff in staffTag"
+            v-for="staff in staffTag.slice(1)"
             :key="staff"
             :value="staff.id"
             :style="{ 'background-color': staff.bgColor, color: staff.textColor }"
@@ -182,12 +185,19 @@ const editEmployee = () => {
             {{ staff.title }}
           </option>
         </select>
-        <button
-          @click="editEmployee()"
-          class="w-full bg-[#13273d] text-white py-4 hover:bg-[#2A358C] transition-all duration-500"
-        >
-          Изменить
-        </button>
+        <div class="w-full flex gap-4">
+          <button
+            @click="editEmployee()"
+            class="w-full bg-[#13273d] text-white py-4 hover:bg-[#2A358C] transition-all duration-500"
+          >
+            Сохранить</button
+          ><button
+            @click="editEmployee(), openCloseEditModal()"
+            class="w-full bg-[#13273d] text-white py-4 hover:bg-[#2A358C] transition-all duration-500"
+          >
+            Сохранить и выйти
+          </button>
+        </div>
       </div>
     </div>
   </div>

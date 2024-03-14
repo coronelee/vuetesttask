@@ -25,7 +25,14 @@ onMounted(() => {
   const age = document.getElementById('age')
   const inn = document.getElementById('inn')
   age.addEventListener('input', (e) => {
-    e.target.value = e.target.value < 0 ? 0 : e.target.value > 122 ? 122 : e.target.value
+    e.target.value =
+      e.target.value < 0
+        ? 0
+        : e.target.value > 122
+          ? 122
+          : e.target.value < 16
+            ? 16
+            : e.target.value
   })
   inn.addEventListener('input', (e) => {
     e.target.value =
@@ -67,11 +74,14 @@ const createEmployee = () => {
     }
   }
   if (!err && gender != 0) {
+    let date = document.getElementById('date_birth').value
+    let dateSplit = date.split('-')
+    let dateResult = dateSplit[2] + '.' + dateSplit[1] + '.' + dateSplit[0]
     props.editEmployeeList({
       full_name: document.getElementById('fio').value,
       inn: document.getElementById('inn').value,
       address: document.getElementById('address').value,
-      date_birth: document.getElementById('date_birth').value,
+      date_birth: dateResult,
       age: document.getElementById('age').value,
       type_contract: document.getElementById('type_contract').value,
       type_contract_id: document.getElementById('type_contract').value,
@@ -139,7 +149,7 @@ const createEmployee = () => {
         <select name="staff" id="staff">
           <option value="" selected disabled hidden>Категория</option>
           <option
-            v-for="staff in staffTag"
+            v-for="staff in staffTag.slice(1)"
             :key="staff"
             :value="staff.id"
             :style="{ 'background-color': staff.bgColor, color: staff.textColor }"
